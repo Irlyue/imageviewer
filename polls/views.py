@@ -7,6 +7,7 @@ from . import image_utils as iu
 from concurrent import futures
 from tqdm import tqdm
 from threading import Thread
+from . import utils
 
 # Create your views here.
 
@@ -47,6 +48,7 @@ def initialize():
 def generate_image_thumb(image_names, in_dir='static/images', out_dir='static/thumbs'):
     in_path_fmt = os.path.join(in_dir, '%s.jpg')
     out_path_fmt = os.path.join(out_dir, '%s.jpg')
+    utils.create_if_not_exists(out_dir)
     with futures.ThreadPoolExecutor(4) as pool:
         thumbs = []
         print('Generating thumbs...')
