@@ -8,16 +8,32 @@ from concurrent import futures
 from tqdm import tqdm
 from threading import Thread
 from . import utils
+from PIL import Image
 
 # Create your views here.
 
 names = []
 name2id = {}
+cmap = utils.load_colormap(256, False)
 
 
 def index(request):
     context = {'names': names}
     return render(request, 'polls/index.html', context=context)
+
+
+def label_image(request, idx):
+    try:
+        image = iu.read_image('static/labels/%s.png' % names[idx])
+    except FileNotFoundError:
+        return HttpResponse(status=404)
+    else:
+        image = cmap[image]
+        print(image.dtype, image.shape)
+        image = Image.fromarray(image)
+        response = HttpResponse(content_type='image/png')
+        image.save(response, 'PNG')
+        return response
 
 
 def image_id(request, idx):
@@ -49,6 +65,7 @@ def generate_image_thumb(image_names, in_dir='static/images', out_dir='static/th
     in_path_fmt = os.path.join(in_dir, '%s.jpg')
     out_path_fmt = os.path.join(out_dir, '%s.jpg')
     utils.create_if_not_exists(out_dir)
+    image_names = [name for name in image_names if not os.path.exists(out_path_fmt % name)]
     with futures.ThreadPoolExecutor(4) as pool:
         thumbs = []
         print('Generating thumbs...')

@@ -6,5 +6,5 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('image/id/<int:idx>', views.image_id, name='image_id'),
     path('image/name/<str:name>', views.image_name, name='image_name'),
-
+    path('label_image/<int:idx>', views.label_image, name='label_image')
 ]
