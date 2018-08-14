@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Image Thumbs</title>
+    </head>
+    <body>
+    <p>Total: {{ names|length }}</p>
+    <table style="width:100%">
+        {% for name in names %}
+            {% cycle '<tr>' '' '' '' '' '' '' '' %}
+                <td><a href="{% url 'image_id' forloop.counter0 %}"><img src="{% static 'thumbs/' %}{{ name }}.jpg"></a></td>
+            {% cycle '' '' '' '' '' '' '' '</tr>' %}
+        {% endfor %}
+    </table>
+    </body>
+</html>

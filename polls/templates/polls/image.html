@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <script src="{% static 'js/mine.js' %}"></script>
+    <style>
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .bttn {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .inline-block{
+            display: inline-block;
+        }
+        .arrow{
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .arrownav{
+            width: 100%;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+
+    </style>
+</head>
+<body onload="bodyOnLoad();">
+    <table class="arrownav">
+        <tr>
+            <td width="50%" align="left"><a class="arrow" href="{% url 'image_id' prev_id %}">&lt;&lt;&lt;</a></td>
+            <td width="50%" align="right"><a class="arrow" href="{% url 'image_id' next_id %}">&gt;&gt;&gt;</a></td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <div style="height:100px"  class="bttn">
+        <a href="{% url 'image_id' prev_id %}">prev</a>
+        <a href="{% url 'image_id' next_id %}">next</a>
+    </div>
+
+    <div class="bttn">
+    <div class="inline-block"><img id="image_0" src="{% static './' %}images/{{ name }}.jpg" height="400" style="" class="center"></div>
+    <div class="inline-block"><img src="{% static './' %}labels/{{ name }}.png" height="400" style="" class="center"></div>
+    </div>
+    <div>
+        <p>Image Info</p>
+        <p>Name: {{ name }}</p>
+        <p id="p_shape"></p>
+    </div>
+
+    <br>
+
+</body>
+</html>
